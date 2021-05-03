@@ -6,8 +6,8 @@ import by.htp.library.dao.impl.TXTUserDAO;
 public class DAOProvider {
 
 	private static final DAOProvider instance = new DAOProvider();
-	private final BookDAO fileBookImpl = new TXTBookDAO();
-	private final UserDAO fileUserImpl = new TXTUserDAO();
+	private final BookDAO bookDAO = new TXTBookDAO();
+	private final UserDAO userDAO = new TXTUserDAO();
 
 	private DAOProvider() {
 
@@ -17,12 +17,12 @@ public class DAOProvider {
 		return instance;
 	}
 
-	public BookDAO getFileBookImpl() {
-		return fileBookImpl;
+	public BookDAO getBookDAO() {
+		return bookDAO;
 	}
 
-	public UserDAO getFileUserImpl() {
-		return fileUserImpl;
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 }

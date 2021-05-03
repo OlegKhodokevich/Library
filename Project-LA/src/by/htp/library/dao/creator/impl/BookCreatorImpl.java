@@ -4,62 +4,50 @@ import java.time.Year;
 
 import by.htp.library.bean.Book;
 import by.htp.library.bean.TypeBookProtecred;
+import by.htp.library.dao.Creator;
 import by.htp.library.dao.creator.BookCreator;
 import by.htp.library.dao.exception.DAOLibraryException;
-import by.htp.library.dao.parser.ParserBookParamFromString;
-import by.htp.library.dao.parser.impl.ParserBookParamFromStringImpl;
-import by.htp.library.dao.validator.ValidatorStingBook;
 
 public class BookCreatorImpl implements BookCreator {
-	
+
 	public Book createBookFromString(String bookString) throws DAOLibraryException {
-	if (!ValidatorStingBook.validateStringBook(bookString)) {
-		throw new DAOLibraryException("Book could not be created");
-	}
-	
-	int id;
-	String autor;
-	String nameBook;
-	String genreOfBook;
-	Year year;
-	String mediaType;
-	TypeBookProtecred typeBook;
-	String bookKeeper;
-	
-	ParserBookParamFromString parserBookParamFromString = new ParserBookParamFromStringImpl();
-	String[] paramBook = parserBookParamFromString.parseBookParamFromString(bookString);
 
-	if (paramBook[0].matches("\\d+")) {
-		id = Integer.valueOf(paramBook[0]);
-	} else {
-		id = 0;
-	}
-	autor = paramBook[1];
-	nameBook = paramBook[2];
-	genreOfBook = paramBook[3];
-	year = Year.of(Integer.valueOf(paramBook[4]));
-	mediaType = paramBook[5];
-	
-	switch (paramBook[6].toUpperCase()) {
-	case "ALL": {
-		typeBook = TypeBookProtecred.ALL;
-		break;
-	}
-	case "NO_BABY": {
-		typeBook = TypeBookProtecred.NO_BABY;
-		break;
-	}
+		int id;
+		String autor;
+		String nameBook;
+		String genreOfBook;
+		Year year;
+		String mediaType;
+		TypeBookProtecred typeBook;
+		String bookKeeper;
 
-	default: {
-		typeBook = TypeBookProtecred.NO_BABY;
+		Book book = null;
+
+		String[] paramBook = Creator.PARSER_BOOK_PARAM_FROM_STRING.parseBookParamFromString(bookString);
+
+		if (paramBook.length == 8) {
+			id = Integer.valueOf(paramBook[0]);
+			autor = paramBook[1];
+			nameBook = paramBook[2];
+			genreOfBook = paramBook[3];
+			year = Year.of(Integer.valueOf(paramBook[4]));
+			mediaType = paramBook[5];
+			typeBook = TypeBookProtecred.valueOf(paramBook[6].toUpperCase());
+			bookKeeper = paramBook[7];
+
+			book = new Book(id, autor, nameBook, genreOfBook, year, mediaType, typeBook, bookKeeper);
+		} else if (paramBook.length == 7) {
+			autor = paramBook[0];
+			nameBook = paramBook[1];
+			genreOfBook = paramBook[2];
+			year = Year.of(Integer.valueOf(paramBook[3]));
+			mediaType = paramBook[4];
+			typeBook = TypeBookProtecred.valueOf(paramBook[5]);
+			bookKeeper = paramBook[6];
+
+			book = new Book(autor, nameBook, genreOfBook, year, mediaType, typeBook, bookKeeper);
+		}
+
+		return book;
 	}
-	}
-	bookKeeper =paramBook[7];
-
-	Book book = new Book(id, autor, nameBook, genreOfBook, year, mediaType,
-			typeBook, bookKeeper);
-
-	return book;
-
-}
 }

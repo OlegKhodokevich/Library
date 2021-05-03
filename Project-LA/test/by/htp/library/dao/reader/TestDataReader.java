@@ -14,7 +14,7 @@ public class TestDataReader {
 	@Test
 	public void testDataReader() throws DAOLibraryException {
 		DataReaderImpl dataReaderImpl = new DataReaderImpl();
-		List<String> actualListUserList = dataReaderImpl.readAllLegalUser(FILE_SOURCE_NAME);
+		List<String> actualListUserList = dataReaderImpl.readAllUser(FILE_SOURCE_NAME);
 		List<String> expectedList = new ArrayList<String>();
 		expectedList.add("1/Khodokevich_Oleg/111aaa/Oleg/admin/parent");
 		expectedList.add("2/Khodokevich_Alina/222bbb/Alina/guest/parent");

@@ -9,7 +9,7 @@ import by.htp.library.dao.parser.ParserBookParamToString;
 
 public class ParserBookParamToStringImpl implements ParserBookParamToString {
 
-	private static final String DELIMITER = "/"; // 1/Tatiana Polyakova/Mansion with access to the astral plane/detective/2021/paper/all/home
+	private static final String DELIMITER = "/";
 
 	@Override
 	public String parseBookParamToStringForTXT(Book book) throws DAOLibraryException {

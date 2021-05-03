@@ -22,7 +22,19 @@ public class Book implements Serializable {
 	public Book() {
 		super();
 	}
-
+	
+	public Book(String autor, String nameBook, String genreOfBook, Year year, String mediaType,
+			TypeBookProtecred typeBook, String bookKeeper) {
+		super();
+		this.autor = autor;
+		this.nameBook = nameBook;
+		this.genreOfBook = genreOfBook;
+		this.year = year;
+		this.mediaType = mediaType;
+		this.typeBook = typeBook;
+		this.bookKeeper = bookKeeper;
+	}
+	
 	public Book(int id, String autor, String nameBook, String genreOfBook, Year year, String mediaType,
 			TypeBookProtecred typeBook, String bookKeeper) {
 		super();

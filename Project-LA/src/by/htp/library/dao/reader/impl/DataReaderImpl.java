@@ -10,49 +10,46 @@ import java.util.stream.Collectors;
 
 import by.htp.library.dao.exception.DAOLibraryException;
 import by.htp.library.dao.reader.DataReader;
-import by.htp.library.dao.validator.ValidatorStingBook;
 import by.htp.library.dao.validator.ValidatorStringUser;
 
 public class DataReaderImpl implements DataReader {
 
-	public List<String> readAllLegalUser(String fileName) throws DAOLibraryException {
-		List<String> listData = new ArrayList<String>();
+	public List<String> readAllUser(String fileName) throws DAOLibraryException {
 		Path path = Paths.get(fileName);
+		if (!Files.exists(path) || Files.isDirectory(path) || !Files.isReadable(path)) {
+			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
+		}
 
-		if (Files.exists(path) && !Files.isDirectory(path) && Files.isReadable(path)) {
-			try {
-				listData = Files.readAllLines(path).stream()
-						.filter(s -> ValidatorStringUser.validateStringForCreateUser(s)).collect(Collectors.toList());
+		List<String> listData = new ArrayList<String>();
 
-			} catch (IOException e) {
-				throw new DAOLibraryException(e);
-			}
-		} else {
-			throw new DAOLibraryException("File can not be read. File " + fileName);
+		try {
+			listData = Files.readAllLines(path).stream().filter(s -> ValidatorStringUser.validateStringForCreateUser(s))
+					.collect(Collectors.toList());
+
+		} catch (IOException e) {
+			throw new DAOLibraryException(e);
 		}
 
 		return listData;
 	}
 
 	@Override
-	public List<String> readAllLegalBook(String fileName) throws DAOLibraryException {
-		List<String> listData = new ArrayList<String>();
+	public List<String> readAllBook(String fileName) throws DAOLibraryException {
 		Path path = Paths.get(fileName);
+		if (!Files.exists(path) || Files.isDirectory(path) || !Files.isReadable(path)) {
+			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
+		}
 
-		if (Files.exists(path) && !Files.isDirectory(path) && Files.isReadable(path)) {
-			try {
-				listData = Files.readAllLines(path).stream()
-						.filter(s -> ValidatorStingBook.validateStringBook(s)).collect(Collectors.toList());
+		List<String> listData = new ArrayList<String>();
 
-			} catch (IOException e) {
-				throw new DAOLibraryException(e);
-			}
-		} else {
-			throw new DAOLibraryException("File can not be read. File " + fileName);
+		try {
+			listData = Files.readAllLines(path);
+
+		} catch (IOException e) {
+			throw new DAOLibraryException(e);
 		}
 
 		return listData;
 	}
-	
-	
+
 }

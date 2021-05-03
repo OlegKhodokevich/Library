@@ -17,6 +17,15 @@ public class User implements Serializable {
 		super();
 	}
 
+	public User(String login, String password, String name, StatusUser status, AgeTypeUser type) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.name = name;
+		this.status = status;
+		this.type = type;
+	}
+	
 	public User(int id, String login, String password, String name, StatusUser status, AgeTypeUser type) {
 		super();
 		this.id = id;
@@ -127,7 +136,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + " [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name
+		return getClass().getSimpleName() + " [id=" + id + ", login=" + login + ", password=" + password + ", name=" + name
 				+ ", status=" + status + ", type=" + type + "]";
 	}
 
