@@ -13,7 +13,7 @@ import by.htp.library.dao.validator.ValidatorUserLogin;
 
 public class TXTUserDAO implements UserDAO {
 	private static final String FILE_SOURCE_USERS = "data/dataUsers.txt";
-	private static final String DELIMITER = "/";
+	private static final String FILE_SOURCE_NUMBER = "data/numberID.txt";
 
 	@Override
 	public Optional<User> signIn(String login, String password) throws DAOLibraryException {
@@ -28,12 +28,12 @@ public class TXTUserDAO implements UserDAO {
 
 		return user;
 	}
-	
+
 	@Override
 	public List<User> getAllUsers() throws DAOLibraryException {
 		List<User> listUsers = new ArrayList<User>();
 
-		List<String> listUserString = Creator.DATA_READER.readAllUser(FILE_SOURCE_USERS);	
+		List<String> listUserString = Creator.DATA_READER.readAllUser(FILE_SOURCE_USERS);
 		for (int i = 0; i < listUserString.size(); i++) {
 			User user = Creator.USER_CREATOR.createUserByString(listUserString.get(i));
 			listUsers.add(user);
@@ -48,10 +48,12 @@ public class TXTUserDAO implements UserDAO {
 		String password = user.getPassword();
 		boolean flag = false;
 		if (signIn(login, password) == null) {
-			List<String> usersList = Creator.DATA_READER.readAllUser(FILE_SOURCE_USERS);
-
-			int numberLastUser = usersList.size();
-			user.setId(numberLastUser + 1);
+			List<String> listNumber = Creator.DATA_READER.getNumberID(FILE_SOURCE_NUMBER);
+			int counterId = Integer.valueOf(listNumber.get(0));
+			user.setId(counterId);
+			counterId++;
+			listNumber.set(0, String.valueOf(counterId));
+			Creator.DATA_WRITER.writeNumberID(listNumber, FILE_SOURCE_NUMBER);
 
 			Creator.DATA_WRITER.writeUserInTXT(user, FILE_SOURCE_USERS);
 			flag = true;
@@ -68,7 +70,8 @@ public class TXTUserDAO implements UserDAO {
 		for (int i = 0; i < listUserString.size(); i++) {
 			if (ValidatorBookByParam.validateStringBookByNameAndAutor(listUserString.get(i), login, password)) {
 
-				substituteUser.setId(i + 1);
+				String[] paramUser = Creator.PARSER_USER_PARAM_FROM_STRING.parseUserFromString(listUserString.get(i));
+				substituteUser.setId(Integer.valueOf(paramUser[0]) + 1);
 
 				String newUserString = Creator.PARSER_USER_PARAM_TO_STRING.parseUserParamToTXT(substituteUser);
 				listUserString.set(i, newUserString);
@@ -87,34 +90,16 @@ public class TXTUserDAO implements UserDAO {
 
 		List<String> listUserString = Creator.DATA_READER.readAllUser(FILE_SOURCE_USERS);
 
-		OUT: for (int i = 0; i < listUserString.size(); i++) {
-			if (!flag && ValidatorUserLogin.validateStringLineByLoginAndPassword(listUserString.get(i), login, password)) {
+		for (int i = 0; i < listUserString.size(); i++) {
+			if (!flag && ValidatorUserLogin.validateStringLineByLoginAndPassword(listUserString.get(i), login,
+					password)) {
 				listUserString.remove(i);
 				i = i - 1;
-				
+
 				flag = true;
-				continue OUT;
-			}
-			if (flag) {
-				String[] usersParam = Creator.PARSER_USER_PARAM_FROM_STRING.parseUserFromString(listUserString.get(i));
-				usersParam[0] = String.valueOf(i + 1);
-
-				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append(usersParam[0]);
-				stringBuilder.append(DELIMITER);
-				stringBuilder.append(usersParam[1]);
-				stringBuilder.append(DELIMITER);
-				stringBuilder.append(usersParam[2]);
-				stringBuilder.append(DELIMITER);
-				stringBuilder.append(usersParam[3]);
-				stringBuilder.append(DELIMITER);
-				stringBuilder.append(usersParam[4]);
-				stringBuilder.append(DELIMITER);
-				stringBuilder.append(usersParam[5]);
-
-				listUserString.set(i, stringBuilder.toString());
 			}
 		}
+
 		if (flag) {
 			Creator.DATA_WRITER.writeAllUsersInTXT(listUserString, FILE_SOURCE_USERS);
 		}

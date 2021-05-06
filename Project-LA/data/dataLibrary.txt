@@ -1,22 +1,3 @@
-1/Tatiana Polyakova1/Mansion with access to the astral plane/detective/2021/paper/ALL/Oleg
-2/John Marrs/The One/detective/2020/paper/no_baby/Peter
-3/Agatha Christie/Murder on the Orient Express/detective/2017/paper/all/home
-4/Mikhail Bulgakov/Master and Margarita/novel/2012/paper/no_baby/home
-5/Antoine de Saint-Exupery/The Little Prince/novel/2018/paper/all/home
-6/Fyodor Dostoevsky/Crime and Punishment/novel/2019/paper/no_baby/home
-7/Armand Louis Caulaincourt/Napoleon's campaign to Russia/documentary/2021/paper/all/home
-8/Andre Maurois/History of England/documentary/2021/paper/no_baby/home
-9/J.K. Rowling/Harry Potter and the Philosopher's Stone/fantasy/2015/paper/all/Peter
-10/J.K. Rowling/Harry Potter And The Chamber of secrets/fantasy/2016/paper/all/home
-11/Bert Bates, Kathy Sierra/Head First Java/education/2020/paper/no_baby/home
-12/Bert Bates, Kathy Sierra/Head First Java/education/2020/electronic/no_baby/home
-13/Eric Freeman, Elisabeth Robson/Design Patterns/education/2020/electronic/all/home
-14/Robert C. Martin/Clean Code/education/2019/electronic/all/home
-15/Hal Elrod/The Miracle Morning/business literature/2016/paper/all/home
-16/Stephen Covey/Seven Habits of Highly Effective People/business literature/2018/paper/all/home
-17/Chris Anderson/TED TALKS/business literature/2016/paper/all/home
-18/Andrey Kurpatov/Train your brain. Ability Trainer/leisure/2019/paper/all/home
-19/S. Stryker/Imagine and draw/leisure/2011/paper/all/home
-20/Korney Chukovsky/Fly Tsokotukha/baby/2017/paper/all/home
-21/Korney Chukovsky/Korney Chukovsky. Poems and Tales/baby/2014/paper/all/home
-22/Zusak M./The Book Thief/novel/2016/paper/all/home
+2/Wild of palin/Aleksey Pehov/novel/2020/paper/all/home
+6/Johngr Marrs/The One/detective/2020/paper/NO_BABY/Peter
+34/Koil/France/detective/2020/paper/NO_BABY/Peter

@@ -16,7 +16,7 @@ import by.htp.library.service.exception.ServiceLibraryException;
 public class SignIn implements Command {
 
 	@Override
-	public String execute(String request) throws ControllerLibraryException {		
+	public String execute(String request) throws ControllerLibraryException {
 		if (request == null || !ParamUserValidator.validateDataForSignIn(request)) {
 			throw new ControllerLibraryException("Request for sign in not correct.");
 		}
@@ -36,20 +36,21 @@ public class SignIn implements Command {
 		ClientService clientService = creator.getClientService();
 		try {
 			user = clientService.signIn(login, password);
+
 		} catch (ServiceLibraryException e) {
 			throw new ControllerLibraryException(e);
 		}
 
 		if (user != null && user.isPresent()) {
 			responce = "Wellcom!" + user.get().toString();
-			
+
 			OpenThreadActualUsers openThreadActualUsers = OpenThreadActualUsers.getOpenThreadActualUsers();
-			openThreadActualUsers.addUser(user.get());			
+			openThreadActualUsers.addUser(user.get());
 
 		} else {
 			responce = "User with that login = " + login + " and password = " + password + "  is not exist.";
 		}
-		
+
 		System.out.println();
 		return responce;
 	}

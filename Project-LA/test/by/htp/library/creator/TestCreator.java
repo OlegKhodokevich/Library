@@ -6,7 +6,7 @@ import org.junit.Test;
 import by.htp.library.bean.AgeTypeUser;
 import by.htp.library.bean.StatusUser;
 import by.htp.library.bean.User;
-import by.htp.library.dao.creator.impl.UserCreatorImpl;
+import by.htp.library.bean.creator.impl.UserCreatorImpl;
 import by.htp.library.dao.exception.DAOLibraryException;
 
 public class TestCreator {

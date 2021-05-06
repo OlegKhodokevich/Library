@@ -1,19 +1,6 @@
 package by.htp.library.main;
 
-import java.time.Year;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
-import by.htp.library.bean.AgeTypeUser;
-import by.htp.library.bean.Book;
-import by.htp.library.bean.StatusUser;
-import by.htp.library.bean.TypeBookProtecred;
-import by.htp.library.bean.User;
 import by.htp.library.controller.Controller;
-import by.htp.library.controller.OpenThreadActualUsers;
-import by.htp.library.dao.UserDAO;
-import by.htp.library.dao.exception.DAOLibraryException;
 import by.htp.library.dao.impl.TXTBookDAO;
 import by.htp.library.dao.impl.TXTUserDAO;
 
@@ -23,28 +10,56 @@ public class MainRun {
 	final static Controller controller = new Controller();
 
 	public static void main(String[] args) {
-		User expectedUser = new User(3, "Khodokevich_Oleg1", "112aaa", "Oleg1", StatusUser.ADMIN, AgeTypeUser.PARENT);
-//		SIGN_IN, GET_ALL_USERS, REGISTRATION, EDIT_USER, REMOVE_USER, SIGN_OUT, WRONG_REQUEST
-
-//		txtUserDAO.registration(expectedUser);
-		User actualUser = new User(3, "Khodokevich_Oleg", "111aaa", "Oleg", StatusUser.ADMIN, AgeTypeUser.PARENT);
-
-		OpenThreadActualUsers openThreadActualUsers = OpenThreadActualUsers.getOpenThreadActualUsers();
 
 		String request = "sign_In Khodokevich_Oleg 111aaa";
 		System.out.println(controller.executeTask(request));
 
-
 		request = "sign_In Khodokevich_Safina 333ccc";
-		System.out.println(controller.executeTask(request));		
+		System.out.println(controller.executeTask(request));
 
 		request = "GET_ALL_USERS Khodokevich_Oleg 111aaa";
 		System.out.println(controller.executeTask(request));
-		
-		
+
 		request = "sign_OUT Khodokevich_Safina";
 		System.out.println(controller.executeTask(request));
-		
-		
+
+		request = "REMOVE_rSER Khodokevich_Oleg 111aaa Khodokevich_Safina 334ccc";
+		System.out.println(controller.executeTask(request));
+
+		request = "REMOVE_USER Khodokevich_Oleg 111aaa Khodokevich_Safina 334ccc";
+		System.out.println(controller.executeTask(request));
+
+		request = "REMOVE_USER Khodokevich_Oleg 111aaa Khodokevich_Safina 333ccc";
+		System.out.println(controller.executeTask(request));
+
+		request = "GET_ALL_USERS Khodokevich_Oleg 111aaa";
+		System.out.println(controller.executeTask(request));
+
+		request = "REGISTRATION Khodokevich_Oleg 111aaa Khodokevich_Safina 333ccc Safina guest child";
+		System.out.println(controller.executeTask(request));
+
+		request = "GET_ALL_USERS Khodokevich_Oleg 111aaa";
+		System.out.println(controller.executeTask(request));
+
+		// 2/John Marrs/The One/detective/2020/paper/no_baby/Peter
+		// GET_INFO_BOOK, GET_ALL_BOOKS, GET_INFO_ALL_BOOK_BY_AUTOR, ADD_BOOK,
+		// EDITE_BOOK, DELETE_BOOK, CHANGE_BOOKKEEPER
+		request = "GET_INFO_BOOK Wild of palin/Aleksey Pehov";
+		System.out.println(controller.executeTask(request));
+
+		request = "GET_ALL_BOOKS";
+		System.out.println(controller.executeTask(request));
+
+		request = "GET_INFO_ALL_BOOK_BY_AUTOR John Marrs";
+		System.out.println(controller.executeTask(request));
+
+		request = "ADD_BOOK Khodokevich_Oleg 111aaa Koil/France/detective/2020/paper/no_baby/Peter";
+		System.out.println(controller.executeTask(request));
+
+		request = "EDITE_BOOK Khodokevich_Oleg 111aaa John Marrs/The One/Johngr Marrs/The Two/detective/2020/paper/no_baby/Peter";
+		System.out.println(controller.executeTask(request));
+
+		request = "DELETE_BOOK Khodokevich_Oleg 111aaa John Marrs/The One";
+		System.out.println(controller.executeTask(request));
 	}
 }

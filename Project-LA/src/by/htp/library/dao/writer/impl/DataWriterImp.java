@@ -23,7 +23,7 @@ public class DataWriterImp implements DataWriter {
 			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
 		}
 
-		String userParamString = Creator.PARSER_USER_PARAM_TO_STRING.parseUserParamToTXT(user);		
+		String userParamString = Creator.PARSER_USER_PARAM_TO_STRING.parseUserParamToTXT(user);
 
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
 			if (Files.lines(Paths.get(fileName)).count() != 0) {
@@ -62,7 +62,7 @@ public class DataWriterImp implements DataWriter {
 		if (!Files.exists(path) || Files.isDirectory(path) || !Files.isReadable(path)) {
 			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
 		}
-		
+
 		String bookString = Creator.PARSER_BOOK_PARAM_TO_STRING.parseBookParamToStringForTXT(book);
 
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, true))) {
@@ -82,7 +82,7 @@ public class DataWriterImp implements DataWriter {
 		if (!Files.exists(path) || Files.isDirectory(path) || !Files.isReadable(path)) {
 			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
 		}
-		
+
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, false))) {
 
 			for (int i = 0; i < listBook.size(); i++) {
@@ -90,6 +90,26 @@ public class DataWriterImp implements DataWriter {
 					bufferedWriter.write("\n");
 				}
 				bufferedWriter.write(listBook.get(i));
+			}
+
+		} catch (IOException e) {
+			throw new DAOLibraryException("Error. Writing book in the file is imposible. File : " + fileName);
+		}
+	}
+
+	public void writeNumberID(List<String> listNumber, String fileName) throws DAOLibraryException {
+		Path path = Paths.get(fileName);
+		if (!Files.exists(path) || Files.isDirectory(path) || !Files.isReadable(path)) {
+			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
+		}
+
+		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName, false))) {
+
+			for (int i = 0; i < listNumber.size(); i++) {
+				if (i != 0) {
+					bufferedWriter.write("\n");
+				}
+				bufferedWriter.write(listNumber.get(i));
 			}
 
 		} catch (IOException e) {

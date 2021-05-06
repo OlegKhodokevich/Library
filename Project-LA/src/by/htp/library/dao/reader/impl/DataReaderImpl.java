@@ -52,4 +52,22 @@ public class DataReaderImpl implements DataReader {
 		return listData;
 	}
 
+	public List<String> getNumberID(String fileName) throws DAOLibraryException {
+		Path path = Paths.get(fileName);
+		if (!Files.exists(path) || Files.isDirectory(path) || !Files.isReadable(path)) {
+			throw new DAOLibraryException("File is not exist or incorrect. File : " + fileName);
+		}
+
+		List<String> listData = new ArrayList<String>();
+
+		try {
+			listData = Files.readAllLines(path);
+
+		} catch (IOException e) {
+			throw new DAOLibraryException(e);
+		}
+
+		return listData;
+	}
+
 }

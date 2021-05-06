@@ -1,26 +1,21 @@
 package by.htp.library.controller.command.impl;
 
-import by.htp.library.bean.User;
-import by.htp.library.bean.creator.UserCreator;
+import by.htp.library.bean.Book;
+import by.htp.library.bean.creator.BookCreator;
 import by.htp.library.controller.CreatorForController;
 import by.htp.library.controller.command.Command;
 import by.htp.library.controller.exeption.ControllerLibraryException;
 import by.htp.library.controller.parser.ParserRequest;
 import by.htp.library.controller.validator.ValidateAdmin;
-import by.htp.library.controller.validator.ValidatorRequestOfStringUser;
 import by.htp.library.dao.exception.DAOLibraryException;
-import by.htp.library.service.ClientService;
+import by.htp.library.service.LibraryService;
 import by.htp.library.service.exception.ServiceLibraryException;
 
-public class EditUser implements Command {
-	private static final String DELIMITER = " ";
+public class AddBook implements Command {
 
 	@Override
 	public String execute(String request) throws ControllerLibraryException {
 
-		if (request == null || !ValidatorRequestOfStringUser.validateStringForEditeUser(request)) {
-			throw new ControllerLibraryException("Request for registration not correct.");
-		}
 		String responce = null;
 
 		CreatorForController creator = CreatorForController.getInstanceCreator();
@@ -30,47 +25,33 @@ public class EditUser implements Command {
 		request = parserRequest.parseAndDeliteParamAdminFromRequest(request);
 
 		if (permission) {
-			String login = null;
-			String password = null;
-
-			User user = null;
-
-			int lastIndex = request.indexOf(DELIMITER);
-			login = request.substring(0, lastIndex);
-			request = request.substring(lastIndex + 1);
-
-			lastIndex = request.indexOf(DELIMITER);
-			password = request.substring(0, lastIndex);
-			request = request.substring(lastIndex + 1);
-
-			UserCreator userCreator = creator.getUserCreator();
-
+			Book book = null;
+			BookCreator bookCreator = creator.getBookCreator();
 			try {
-				user = userCreator.createUserByString(request);
+				book = bookCreator.createBookFromString(request);
+
 			} catch (DAOLibraryException e1) {
 				throw new ControllerLibraryException(e1);
 			}
 
-			ClientService clientService = creator.getClientService();
+			LibraryService libraryService = creator.getLibraryService();
 			boolean result = false;
 
 			try {
-				result = clientService.editUser(login, password, user);
+				result = libraryService.addBook(book);
 			} catch (ServiceLibraryException e) {
 				throw new ControllerLibraryException(e);
 			}
 
 			if (result) {
-				responce = "User " + login + " has edited to " + user.getLogin();
+				responce = "Book" + book.getNameBook() + " has added.";
 			} else {
-				responce = "User with that login = " + login + " and password = " + password + "  is not exist.";
+				responce = "Book with name " + book.getNameBook() + " is exist.";
 			}
-
 		} else {
 			responce = "You did not sign in as admin. ";
 		}
 
 		return responce;
 	}
-
 }

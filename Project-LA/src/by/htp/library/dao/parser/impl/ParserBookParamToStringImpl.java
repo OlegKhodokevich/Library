@@ -21,7 +21,7 @@ public class ParserBookParamToStringImpl implements ParserBookParamToString {
 		String mediaType = book.getMediaType();
 		TypeBookProtecred typeBook = book.getTypeBook();
 		String bookKeeper = book.getBookKeeper();
-		
+
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(id);
 		stringBuilder.append(DELIMITER);
@@ -39,7 +39,6 @@ public class ParserBookParamToStringImpl implements ParserBookParamToString {
 		stringBuilder.append(DELIMITER);
 		stringBuilder.append(bookKeeper);
 
-		
 		return stringBuilder.toString();
 	}
 }

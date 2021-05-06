@@ -30,7 +30,6 @@ public class GetAllUsers implements Command {
 
 		List<User> users = new ArrayList<User>();
 
-		System.out.println(permission); 								//TODO
 		if (permission) {
 
 			ClientService clientService = creator.getClientService();
@@ -45,7 +44,7 @@ public class GetAllUsers implements Command {
 			stringBuilder.append("The following users are registered: \n");
 
 			for (int i = 0; i < users.size(); i++) {
-				stringBuilder.append(users.toString());
+				stringBuilder.append(users.get(i).toString());
 				if (i != users.size() - 1) {
 					stringBuilder.append("\n");
 				}

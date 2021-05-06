@@ -45,7 +45,7 @@ public class LibraryServiceImpl implements LibraryService {
 		List<Book> listBooks = new ArrayList<Book>();
 
 		try {
-			listBooks = BOOK_DAO.getInfoAllBook();
+			listBooks = BOOK_DAO.getInfoAllBookByAutor(autor);
 		} catch (DAOLibraryException e) {
 			throw new ServiceLibraryException(e);
 		}

@@ -1,9 +1,9 @@
 package by.htp.library.dao;
 
-import by.htp.library.dao.creator.BookCreator;
-import by.htp.library.dao.creator.UserCreator;
-import by.htp.library.dao.creator.impl.BookCreatorImpl;
-import by.htp.library.dao.creator.impl.UserCreatorImpl;
+import by.htp.library.bean.creator.BookCreator;
+import by.htp.library.bean.creator.UserCreator;
+import by.htp.library.bean.creator.impl.BookCreatorImpl;
+import by.htp.library.bean.creator.impl.UserCreatorImpl;
 import by.htp.library.dao.impl.TXTBookDAO;
 import by.htp.library.dao.impl.TXTUserDAO;
 import by.htp.library.dao.parser.ParserBookParamFromString;

@@ -14,6 +14,7 @@ import by.htp.library.dao.validator.ValidatorBookByParam;
 public class TXTBookDAO implements BookDAO {
 
 	private static final String FILE_SOURCE_BOOKS = "data/dataLibrary.txt";
+	private static final String FILE_SOURCE_NUMBER = "data/numberID.txt";
 	private static final String DELIMITER = "/";
 
 	@Override
@@ -23,6 +24,7 @@ public class TXTBookDAO implements BookDAO {
 		Optional<Book> book = null;
 		for (int i = 0; i < listBookString.size(); i++) {
 			if (ValidatorBookByParam.validateStringBookByNameAndAutor(listBookString.get(i), nameBook, autor)) {
+
 				book = Optional.ofNullable(Creator.BOOK_CREATOR.createBookFromString(listBookString.get(i)));
 			}
 		}
@@ -48,11 +50,11 @@ public class TXTBookDAO implements BookDAO {
 	}
 
 	@Override
-	public List<Book> getInfoAllBook() throws DAOLibraryException {		
+	public List<Book> getInfoAllBook() throws DAOLibraryException {
 		List<Book> listBook = new ArrayList<Book>();
-		
+
 		List<String> listBookString = Creator.DATA_READER.readAllBook(FILE_SOURCE_BOOKS);
-		
+
 		for (int i = 0; i < listBookString.size(); i++) {
 			listBook.add(Creator.BOOK_CREATOR.createBookFromString(listBookString.get(i)));
 		}
@@ -67,14 +69,17 @@ public class TXTBookDAO implements BookDAO {
 		String nameBook = book.getNameBook();
 		String autor = book.getAutor();
 
-		List<String> listBookString = Creator.DATA_READER.readAllBook(FILE_SOURCE_BOOKS);
-
-		int numberLastBook = listBookString.size();
-		book.setId(numberLastBook + 1);
-
 		if (getInfoBook(nameBook, autor) == null) {
-			int numberOfLastbook = listBookString.size();
-			book.setId(numberOfLastbook + 1);
+
+			List<String> listNumber = Creator.DATA_READER.getNumberID(FILE_SOURCE_NUMBER);
+			int counterId = Integer.valueOf(listNumber.get(1));
+			book.setId(counterId);
+			System.out.println(book.toString());
+			counterId++;
+			listNumber.set(1, String.valueOf(counterId));
+			Creator.DATA_WRITER.writeNumberID(listNumber, FILE_SOURCE_NUMBER);
+
+			System.out.println();
 
 			Creator.DATA_WRITER.writeBookInTXT(book, FILE_SOURCE_BOOKS);
 
@@ -90,19 +95,21 @@ public class TXTBookDAO implements BookDAO {
 
 		List<String> listBooksString = Creator.DATA_READER.readAllBook(FILE_SOURCE_BOOKS);
 
-		for (int i = 0; i < listBooksString.size(); i++) {
+		int i = 0;
+		while (i < listBooksString.size() && result == false) {
 			if (ValidatorBookByParam.validateStringBookByNameAndAutor(listBooksString.get(i), nameBook, autor)) {
 				substituteBook.setId(i + 1);
-				
+
 				String substituteBookString = Creator.PARSER_BOOK_PARAM_TO_STRING
 						.parseBookParamToStringForTXT(substituteBook);
-				
+
 				listBooksString.set(i, substituteBookString);
 				result = true;
 			}
+			i++;
 		}
 		if (result) {
-			Creator.DATA_WRITER.writeAllBookInTXT(listBooksString, FILE_SOURCE_BOOKS);			
+			Creator.DATA_WRITER.writeAllBookInTXT(listBooksString, FILE_SOURCE_BOOKS);
 		}
 		return result;
 	}
@@ -111,44 +118,21 @@ public class TXTBookDAO implements BookDAO {
 	public boolean deleteBook(String nameBook, String autor) throws DAOLibraryException {
 		boolean result = false;
 
-		List<String> listBooksString = Creator.DATA_READER.readAllBook(FILE_SOURCE_BOOKS);		
+		List<String> listBooksString = Creator.DATA_READER.readAllBook(FILE_SOURCE_BOOKS);
 
-		OUT: for (int i = 0; i < listBooksString.size(); i++) {
+		int i = 0;
+		while (i < listBooksString.size() && result == false) {
 			if (!result
 					&& ValidatorBookByParam.validateStringBookByNameAndAutor(listBooksString.get(i), nameBook, autor)) {
-				
+
 				listBooksString.remove(i);
-				
+
 				i = i - 1;
 				result = true;
-				continue OUT;
 			}
-			if (result) {
-				String[] booksParam = Creator.PARSER_BOOK_PARAM_FROM_STRING
-						.parseBookParamFromString(listBooksString.get(i));
-				booksParam[0] = String.valueOf(i + 1);
-
-				StringBuilder book = new StringBuilder();
-				book.append(booksParam[0]);
-				book.append(DELIMITER);
-				book.append(booksParam[1]);
-				book.append(DELIMITER);
-				book.append(booksParam[2]);
-				book.append(DELIMITER);
-				book.append(booksParam[3]);
-				book.append(DELIMITER);
-				book.append(booksParam[4]);
-				book.append(DELIMITER);
-				book.append(booksParam[5]);
-				book.append(DELIMITER);
-				book.append(booksParam[6]);
-				book.append(DELIMITER);
-				book.append(booksParam[7]);
-
-				listBooksString.set(i, book.toString());
-			}
+			i++;
 		}
-		
+
 		if (result) {
 			Creator.DATA_WRITER.writeAllBookInTXT(listBooksString, FILE_SOURCE_BOOKS);
 		}
@@ -164,9 +148,10 @@ public class TXTBookDAO implements BookDAO {
 
 		for (int i = 0; i < listBooksString.size(); i++) {
 			if (ValidatorBookByParam.validateStringBookByNameAndAutor(listBooksString.get(i), nameBook, autor)) {
-				String [] paramBook = Creator.PARSER_BOOK_PARAM_FROM_STRING.parseBookParamFromString(listBooksString.get(i));
-				paramBook [7] = newBookKeeper; //23/Zusak M./The Book Thief/novel/2016/paper/all/home
-				
+				String[] paramBook = Creator.PARSER_BOOK_PARAM_FROM_STRING
+						.parseBookParamFromString(listBooksString.get(i));
+				paramBook[7] = newBookKeeper; // 23/Zusak M./The Book Thief/novel/2016/paper/all/home
+
 				StringBuilder book = new StringBuilder();
 				book.append(paramBook[0]);
 				book.append(DELIMITER);
@@ -182,8 +167,8 @@ public class TXTBookDAO implements BookDAO {
 				book.append(DELIMITER);
 				book.append(paramBook[6]);
 				book.append(DELIMITER);
-				book.append(paramBook[7]);				
-				
+				book.append(paramBook[7]);
+
 				listBooksString.set(i, book.toString());
 				result = true;
 			}
@@ -191,7 +176,7 @@ public class TXTBookDAO implements BookDAO {
 		if (result) {
 			Creator.DATA_WRITER.writeAllBookInTXT(listBooksString, FILE_SOURCE_BOOKS);
 		}
-		
+
 		return result;
 	}
 

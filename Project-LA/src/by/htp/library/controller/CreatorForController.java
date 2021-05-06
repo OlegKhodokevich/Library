@@ -1,11 +1,11 @@
 package by.htp.library.controller;
 
+import by.htp.library.bean.creator.BookCreator;
+import by.htp.library.bean.creator.UserCreator;
+import by.htp.library.bean.creator.impl.BookCreatorImpl;
+import by.htp.library.bean.creator.impl.UserCreatorImpl;
 import by.htp.library.controller.parser.ParserRequest;
 import by.htp.library.controller.parser.ParserUserParamToStringForController;
-import by.htp.library.dao.creator.BookCreator;
-import by.htp.library.dao.creator.UserCreator;
-import by.htp.library.dao.creator.impl.BookCreatorImpl;
-import by.htp.library.dao.creator.impl.UserCreatorImpl;
 import by.htp.library.service.ClientService;
 import by.htp.library.service.LibraryService;
 import by.htp.library.service.impl.ClientServiceImpl;

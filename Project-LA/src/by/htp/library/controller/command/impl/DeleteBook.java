@@ -7,17 +7,13 @@ import by.htp.library.controller.command.Command;
 import by.htp.library.controller.exeption.ControllerLibraryException;
 import by.htp.library.controller.parser.ParserRequest;
 import by.htp.library.controller.validator.ValidateAdmin;
-import by.htp.library.controller.validator.ValidatorRequestOfStringUser;
-import by.htp.library.service.ClientService;
+import by.htp.library.service.LibraryService;
 import by.htp.library.service.exception.ServiceLibraryException;
 
-public class RemoveUser implements Command {
+public class DeleteBook implements Command {
 
 	@Override
 	public String execute(String request) throws ControllerLibraryException {
-		if (request == null || !ValidatorRequestOfStringUser.validateStringForRemoveUser(request)) {
-			throw new ControllerLibraryException("Request for remove user not correct.");
-		}
 
 		String responce = null;
 
@@ -28,27 +24,27 @@ public class RemoveUser implements Command {
 		request = parserRequest.parseAndDeliteParamAdminFromRequest(request);
 
 		if (permission) {
-			String login = null;
-			String password = null;
+			String name = null;
+			String autor = null;
 
 			boolean result = false;
 
 			List<String> paramsRequest = parserRequest.parseParamsFromRequest(request);
 
-			login = paramsRequest.get(0);
-			password = paramsRequest.get(1);
+			name = paramsRequest.get(0);
+			autor = paramsRequest.get(1);
 
-			ClientService clientService = creator.getClientService();
+			LibraryService libraryService = creator.getLibraryService();
 			try {
-				result = clientService.removeUser(login, password);
+				result = libraryService.deleteBook(name, autor);
 			} catch (ServiceLibraryException e) {
 				throw new ControllerLibraryException(e);
 			}
 
 			if (result) {
-				responce = "User " + login + " has removed.";
+				responce = "Book " + name + " has deleted.";
 			} else {
-				responce = "User with that login = " + login + " and password = " + password + "  is not exist.";
+				responce = "Book with that name = " + name + " and autor = " + autor + "  is not exist.";
 			}
 		} else {
 			responce = "You did not sign in as admin. ";

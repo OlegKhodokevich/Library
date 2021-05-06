@@ -6,24 +6,33 @@ import java.util.List;
 
 public class ParserRequest {
 	private static final String DELIMITER = " ";
-	
+	private static final String DELIMITER_BOOK = "/";
+
 	public List<String> parseParamsFromRequest(String request) {
 		List<String> paramsReque = new ArrayList<String>();
-		
+
 		paramsReque = Arrays.asList(request.split(DELIMITER));
 
-		return paramsReque;		
+		return paramsReque;
 	}
-	
-	public String parseAndDeliteParamAdminFromRequest(String request) {	
-		
-		int lastindex = request.indexOf(DELIMITER);		
+
+	public List<String> parseParamsBookFromRequest(String request) {
+		List<String> paramsReque = new ArrayList<String>();
+
+		paramsReque = Arrays.asList(request.split(DELIMITER_BOOK));
+
+		return paramsReque;
+	}
+
+	public String parseAndDeliteParamAdminFromRequest(String request) {
+
+		int lastindex = request.indexOf(DELIMITER);
 		request = request.substring(lastindex + 1);
 
-		lastindex = request.indexOf(DELIMITER);		
+		lastindex = request.indexOf(DELIMITER);
 		request = request.substring(lastindex + 1);
-		
-		return request;		
+
+		return request;
 	}
 
 }

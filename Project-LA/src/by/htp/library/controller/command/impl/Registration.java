@@ -1,13 +1,13 @@
 package by.htp.library.controller.command.impl;
 
 import by.htp.library.bean.User;
+import by.htp.library.bean.creator.UserCreator;
 import by.htp.library.controller.CreatorForController;
 import by.htp.library.controller.command.Command;
 import by.htp.library.controller.exeption.ControllerLibraryException;
 import by.htp.library.controller.parser.ParserRequest;
 import by.htp.library.controller.validator.ValidateAdmin;
 import by.htp.library.controller.validator.ValidatorRequestOfStringUser;
-import by.htp.library.dao.creator.UserCreator;
 import by.htp.library.dao.exception.DAOLibraryException;
 import by.htp.library.service.ClientService;
 import by.htp.library.service.exception.ServiceLibraryException;
@@ -34,6 +34,7 @@ public class Registration implements Command {
 
 			try {
 				user = userCreator.createUserByString(request);
+
 			} catch (DAOLibraryException e1) {
 				throw new ControllerLibraryException(e1);
 			}

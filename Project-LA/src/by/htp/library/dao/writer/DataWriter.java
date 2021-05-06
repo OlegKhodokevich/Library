@@ -14,4 +14,6 @@ public interface DataWriter {
 	void writeBookInTXT(Book book, String fileName) throws DAOLibraryException;
 	
 	void writeAllBookInTXT(List<String> listBook, String fileName) throws DAOLibraryException;
+	
+	void writeNumberID(List<String> listNumber, String fileName) throws DAOLibraryException;
 }

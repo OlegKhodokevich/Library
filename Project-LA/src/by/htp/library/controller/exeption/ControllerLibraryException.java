@@ -1,6 +1,6 @@
 package by.htp.library.controller.exeption;
 
-public class ControllerLibraryException extends Exception{
+public class ControllerLibraryException extends Exception {
 
 	private static final long serialVersionUID = -4562596787140476269L;
 
@@ -19,6 +19,5 @@ public class ControllerLibraryException extends Exception{
 	public ControllerLibraryException(Throwable cause) {
 		super(cause);
 	}
-	
 
 }
